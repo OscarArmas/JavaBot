@@ -4,6 +4,7 @@ import org.omg.CORBA.DATA_CONVERSION;
 import org.omg.CORBA.DataOutputStream;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -17,20 +18,27 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     JButton BtnEnviar;
     JTextArea textArea;
     public frmCleinte(){
+
         textArea=new JTextArea();
-        textArea.setBounds(10,70,200,200);
-        add(textArea);
+        textArea.setBounds(10,110,360,300);
+        textArea.setFont(new Font("Dialog", Font.BOLD, 36));
+
         txtmensaje= new JTextField();
-        txtmensaje.setBounds(10,10,200,20);
-        add(txtmensaje);
+        txtmensaje.setBounds(10,10,360,40);
+        textArea.setFont(new Font("Dialog", Font.BOLD, 30));
+
         BtnEnviar=new JButton();
         BtnEnviar.setText("Enviar");
-        BtnEnviar.setBounds(10,40,150,20);
+        BtnEnviar.setBounds(10,60,145,20);
+        BtnEnviar.setSize(100,40);
         BtnEnviar.addActionListener(this);
-        add(BtnEnviar);
+
+        add(BtnEnviar,"Center");
+        add(txtmensaje,"North");
+        add(textArea,"South");
         this.setTitle("CLIENTE");
         setLayout(null);
-        setSize(400,400);
+        setSize(400,500);
         setVisible(true);
         Thread hilo= new Thread(this);
         hilo.start();
@@ -43,7 +51,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==BtnEnviar){
             try{
-                Socket cli=new Socket("192.168.100.4",8016);
+                Socket cli=new Socket("192.168.100.4",8018);
                 java.io.DataOutputStream flujo= new java.io.DataOutputStream(cli.getOutputStream());
                 flujo.writeUTF(txtmensaje.getText());
                 cli.close();
@@ -59,7 +67,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public void run() {
 
        try{
-           ServerSocket serve = new ServerSocket(8017);
+           ServerSocket serve = new ServerSocket(8019);
            Socket cli;
            while (true){
                cli =serve.accept();

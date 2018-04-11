@@ -53,7 +53,7 @@ public class frmServidor extends JFrame implements Runnable {
     public void run() {
 
         try {
-            ServerSocket servidor = new ServerSocket(8016);
+            ServerSocket servidor = new ServerSocket(8018);
             Socket cli;
                 while (true) {
                     cli = servidor.accept();
@@ -66,7 +66,7 @@ public class frmServidor extends JFrame implements Runnable {
                         servidor.close();
                         break;
                     }
-                    Socket envia= new Socket("192.168.100.4",8017);
+                    Socket envia= new Socket("192.168.100.4",8019);
                     for(int i=0; i<=7;i++) {
                         if (EntardadeTexto.equals(Preguntas[i])) {
                             DataOutputStream clicenvia = new DataOutputStream(envia.getOutputStream());
