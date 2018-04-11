@@ -16,6 +16,7 @@ public class frmServidor extends JFrame implements Runnable {
 
 
     public frmServidor(){
+        this.setTitle("SERVIDOR");
         ////////////////////////////////////
         Respuesta[0]="Hola, soy javaBot";
         Respuesta[1]="vivo en la Pc";
@@ -52,23 +53,27 @@ public class frmServidor extends JFrame implements Runnable {
     public void run() {
 
         try {
-            ServerSocket servidor = new ServerSocket(9099);
+            ServerSocket servidor = new ServerSocket(8016);
             Socket cli;
                 while (true) {
                     cli = servidor.accept();
                     DataInputStream flujo = new DataInputStream(cli.getInputStream());
                     String msg = flujo.readUTF();
                     txtmensajes.append("\n" + msg);
+                    EntardadeTexto = msg;
                     cli.close();
                     if(msg.equalsIgnoreCase("FIN")){
                         servidor.close();
                         break;
                     }
-                    Socket envia= new Socket("192.168.100.4",9098);
-                    DataOutputStream clicenvia= new DataOutputStream(envia.getOutputStream());
-                    EntardadeTexto = msg;
-                    clicenvia.writeUTF("HOLA Oscar");
-                    clicenvia.close();
+                    Socket envia= new Socket("192.168.100.4",8017);
+                    for(int i=0; i<=7;i++) {
+                        if (EntardadeTexto.equals(Preguntas[i])) {
+                            DataOutputStream clicenvia = new DataOutputStream(envia.getOutputStream());
+                            clicenvia.writeUTF(Respuesta[i]);
+                            clicenvia.close();
+                        }
+                    }
                 }
 
         } catch (IOException e) {

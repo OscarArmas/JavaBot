@@ -28,6 +28,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
         BtnEnviar.setBounds(10,40,150,20);
         BtnEnviar.addActionListener(this);
         add(BtnEnviar);
+        this.setTitle("CLIENTE");
         setLayout(null);
         setSize(400,400);
         setVisible(true);
@@ -42,7 +43,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==BtnEnviar){
             try{
-                Socket cli=new Socket("192.168.100.4",9099);
+                Socket cli=new Socket("192.168.100.4",8016);
                 java.io.DataOutputStream flujo= new java.io.DataOutputStream(cli.getOutputStream());
                 flujo.writeUTF(txtmensaje.getText());
                 cli.close();
@@ -58,12 +59,13 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public void run() {
 
        try{
-           ServerSocket serve = new ServerSocket(9098);
+           ServerSocket serve = new ServerSocket(8017);
            Socket cli;
            while (true){
                cli =serve.accept();
                DataInputStream FLUJO= new DataInputStream(cli.getInputStream());
                String msg= FLUJO.readUTF();
+               textArea.append("\nUser: " + txtmensaje.getText()+"\n");
                textArea.append(msg);
            }
 
