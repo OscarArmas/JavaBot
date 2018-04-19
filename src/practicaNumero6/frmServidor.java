@@ -1,5 +1,3 @@
-package practicaNumero6;
-
 import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,13 +7,15 @@ import java.net.Socket;
 
 public class frmServidor extends JFrame implements Runnable {
     JTextArea txtmensajes;
-    String Respuesta[]=new String[10];
-    String Preguntas[]=new String[10];
+    String Respuesta[];
+    String Preguntas[];
     String EntardadeTexto;
 
 
 
     public frmServidor(){
+    	Respuesta= new String[16];
+    	Preguntas=new String[16];
         this.setTitle("SERVIDOR");
         ////////////////////////////////////
         Respuesta[0]="Hola, soy javaBot";
@@ -25,6 +25,10 @@ public class frmServidor extends JFrame implements Runnable {
         Respuesta[4]="No soy humano, soy puro codigo";
         Respuesta[5]="Dime Javabooot";
         Respuesta[6]="La carnita Asada";
+        Respuesta[7]="Es 4";
+        Respuesta[8]="tengo 1 semana de vida";
+        Respuesta[9]="ayer visite rusia, en un troyano";
+        Respuesta[10]="Mi piernita";
         /////////Preguntas
         Preguntas[0]="Hola";
         Preguntas[1]="Donde vives";
@@ -33,6 +37,10 @@ public class frmServidor extends JFrame implements Runnable {
         Preguntas[4]="Eres humano?";
         Preguntas[5]="Como te digo";
         Preguntas[6]="Se va hacer?";
+        Preguntas[7]="2 + 2";
+        Preguntas[8]="Tu edad";
+        Preguntas[9]="cuentame algo";
+        Preguntas[10]="Epale";
         //////////////////////////////////7
         txtmensajes= new JTextArea();
         txtmensajes.setBounds(10,10,400,400);
@@ -53,7 +61,7 @@ public class frmServidor extends JFrame implements Runnable {
     public void run() {
 
         try {
-            ServerSocket servidor = new ServerSocket(8018);
+            ServerSocket servidor = new ServerSocket(8024);
             Socket cli;
                 while (true) {
                     cli = servidor.accept();
@@ -66,8 +74,8 @@ public class frmServidor extends JFrame implements Runnable {
                         servidor.close();
                         break;
                     }
-                    Socket envia= new Socket("192.168.100.4",8019);
-                    for(int i=0; i<=7;i++) {
+                    Socket envia= new Socket("192.168.100.7",8025);
+                    for(int i=0; i<=10;i++) {
                         if (EntardadeTexto.equals(Preguntas[i])) {
                             DataOutputStream clicenvia = new DataOutputStream(envia.getOutputStream());
                             clicenvia.writeUTF(Respuesta[i]);

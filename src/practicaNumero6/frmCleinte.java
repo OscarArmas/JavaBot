@@ -1,8 +1,3 @@
-package practicaNumero6;
-
-import org.omg.CORBA.DATA_CONVERSION;
-import org.omg.CORBA.DataOutputStream;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +15,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public frmCleinte(){
 
         textArea=new JTextArea();
-        textArea.setBounds(10,110,360,300);
+        textArea.setBounds(10,110,360,1000);
         textArea.setFont(new Font("Dialog", Font.BOLD, 36));
 
         txtmensaje= new JTextField();
@@ -38,7 +33,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
         add(textArea,"South");
         this.setTitle("CLIENTE");
         setLayout(null);
-        setSize(400,500);
+        setSize(400,1100);
         setVisible(true);
         Thread hilo= new Thread(this);
         hilo.start();
@@ -51,7 +46,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==BtnEnviar){
             try{
-                Socket cli=new Socket("192.168.100.4",8018);
+                Socket cli=new Socket("192.168.100.7",8024);
                 java.io.DataOutputStream flujo= new java.io.DataOutputStream(cli.getOutputStream());
                 flujo.writeUTF(txtmensaje.getText());
                 cli.close();
@@ -67,7 +62,7 @@ public class frmCleinte extends JFrame implements ActionListener, Runnable{
     public void run() {
 
        try{
-           ServerSocket serve = new ServerSocket(8019);
+           ServerSocket serve = new ServerSocket(8025);
            Socket cli;
            while (true){
                cli =serve.accept();
